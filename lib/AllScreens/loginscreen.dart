@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_flutter/AllScreens/homescreen.dart';
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+
+final dio = Dio();
+
+Future<bool> getHttp(String email, String pass) async {
+  final response = await dio.post(
+      'https://api-simple-kbc3.onrender.com/users/get_token/',
+      data: {'email': email, 'password': pass});
+  if (response.statusCode == 200) {
+    return Future<bool>.value(true);
+  } else {
+    return Future<bool>.value(false);
+  }
+}
 
 final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
   onPrimary: Colors.black87,
@@ -22,9 +38,11 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
 );
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
 
   static const String idScreen = "homescreen";
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +83,7 @@ class LoginScreen extends StatelessWidget {
                     height: 1.0,
                   ),
                   TextField(
+                    controller: emailTextEditingController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         labelText: "Email", border: OutlineInputBorder()),
@@ -73,7 +92,8 @@ class LoginScreen extends StatelessWidget {
                     height: 20.0,
                   ),
                   TextField(
-                    keyboardType: TextInputType.emailAddress,
+                    controller: passwordTextEditingController,
+                    keyboardType: TextInputType.visiblePassword,
                     decoration: InputDecoration(
                         labelText: "Senha", border: OutlineInputBorder()),
                   ),
@@ -82,7 +102,19 @@ class LoginScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: raisedButtonStyle,
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (await getHttp(emailTextEditingController.text,
+                              passwordTextEditingController.text) ==
+                          true) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()),
+                        );
+                      } else {
+                        print("nada");
+                      }
+                    },
                     child: Text('Login'),
                   )
                 ]),

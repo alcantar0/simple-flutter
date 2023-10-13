@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_flutter/AllScreens/loginscreen.dart';
 
 final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
   onPrimary: Colors.black87,
@@ -36,23 +37,14 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 45.0,
-              ),
-              Image(
-                image: AssetImage('images/book.png'),
-                width: 390.0,
-                height: 350.0,
-                alignment: Alignment.center,
-              ),
-              SizedBox(
-                height: 1.0,
+                height: 50.0,
               ),
               Text(
                 "Home",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                     fontStyle: FontStyle.italic,
-                    fontSize: 30.0,
+                    fontSize: 50.0,
                     fontWeight: FontWeight.w900),
               ),
               SizedBox(
@@ -64,10 +56,13 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 1.0,
                   ),
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                        labelText: "Email", border: OutlineInputBorder()),
+                  Text(
+                    "Aqui você poderá ver seus livros que foram lidos.",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.playfairDisplay(
+                        fontStyle: FontStyle.normal,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.w900),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -78,12 +73,17 @@ class HomeScreen extends StatelessWidget {
                         labelText: "Senha", border: OutlineInputBorder()),
                   ),
                   SizedBox(
-                    height: 30.0,
+                    height: 100.0,
                   ),
                   ElevatedButton(
                     style: raisedButtonStyle,
-                    onPressed: () {},
-                    child: Text('Login'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: Text('Voltar'),
                   )
                 ]),
               ),
